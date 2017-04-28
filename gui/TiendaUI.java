@@ -4,16 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
 
 public class TiendaUI extends JFrame {
 
 	private JPanel contentPane;
-
+	private CrearProductoUI cp = new CrearProductoUI();
 	/**
 	 * Launch the application.
 	 */
@@ -34,32 +39,77 @@ public class TiendaUI extends JFrame {
 	 * Create the frame.
 	 */
 	public TiendaUI() {
-		setTitle("TIENDA");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 186, 300);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				preguntarSalir();
+			}
+		});
+		setTitle("TuTienda V.0.0.1");
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 250, 217);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JButton btnCrear = new JButton("Crear");
-		btnCrear.setBounds(35, 38, 89, 23);
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnCrear();
+			}
+		});
+		btnCrear.setBounds(45, 11, 150, 23);
 		contentPane.add(btnCrear);
 
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(35, 72, 89, 23);
-		contentPane.add(btnModificar);
-
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(35, 106, 89, 23);
-		contentPane.add(btnEliminar);
+		JButton btnListado = new JButton("Listado");
+		btnListado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnListado();
+			}
+		});
+		btnListado.setBounds(45, 45, 150, 23);
+		contentPane.add(btnListado);
 
 		JButton btnComprar = new JButton("Comprar");
-		btnComprar.setBounds(35, 138, 89, 23);
+		btnComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnComprar();
+			}
+		});
+		btnComprar.setBounds(45, 79, 150, 23);
 		contentPane.add(btnComprar);
 
 		JButton btnSalir = new JButton("Salir");
-		btnSalir.setBounds(35, 228, 89, 23);
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				preguntarSalir();
+			}
+		});
+		btnSalir.setBounds(45, 147, 150, 23);
 		contentPane.add(btnSalir);
+		
+	}
+	
+	private void btnCrear() {
+		CrearProductoUI frmCrear = new CrearProductoUI();
+		frmCrear.setVisible(true);
+	}
+	
+	private void btnListado() {
+		ListadoUI frmListado = new ListadoUI();
+		frmListado.setVisible(true);
+	}
+	
+	private void btnComprar(){
+		CompraUI frmComprar = new CompraUI();
+		frmComprar.setVisible(true);
+	}
+	
+	public void preguntarSalir(){
+		int salir = JOptionPane.showOptionDialog(null, "Deseea salir del programa", "Cerrar sesion",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE, null, null, null);
+	      if (salir==JOptionPane.YES_OPTION){
+	    	  System.exit(0);
+	      }
 	}
 }
