@@ -18,6 +18,7 @@ public class ConexionSQLite {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
 	public ConexionSQLite() {
+		System.out.println("Conectando...");
 		// cargar driver y conectar bd
 		try {
 			// cargar el driver jdbc-sqlite
@@ -62,8 +63,12 @@ public class ConexionSQLite {
 			e.printStackTrace();
 		}
 	}
-	public PreparedStatement prepareStatement(String sql) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Connection get_connection() {
+		return cn;
+	}
+	
+	public PreparedStatement prepareStatement(String sql) throws SQLException {
+		return cn.prepareStatement(sql);
 	}
 }

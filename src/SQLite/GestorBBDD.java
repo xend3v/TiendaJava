@@ -11,24 +11,21 @@ import java.util.Date;
 import model.Producto;
 
 public class GestorBBDD {
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	ConexionSQLite conex = new ConexionSQLite();
 
 	public void crear(Producto p) {
-		String sql;
-		PreparedStatement ps;
-		sql = "INSERT INTO PLANTACIONES VALUES(?, ?, ?, ?, ?, ?);";
+		PreparedStatement ps = null;
+		String sql = "INSERT INTO PRODUCTOS (Nombre, Precio, FechaCaducidad, Stock) VALUES(?, ?, ?, ?);";
 		try {
 			ps = conex.prepareStatement(sql);
-			ps.setInt(1, p.getIdProducto());
-			ps.setString(2, p.getNombrePro());
-			ps.setFloat(3, p.getPrecioUnidad());
-			ps.setString(4, sdf.format(p.getFechaCaducidad()));
-			ps.setInt(5, p.getStock());
+			ps.setString(1, p.getNombrePro());
+			ps.setFloat(2, p.getPrecioUnidad());
+			ps.setString(3, sdf.format(p.getFechaCaducidad()));
+			ps.setInt(4, p.getStock());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error en GestorBBDD linea 28: " + e);
 		}
 	}
 
@@ -36,10 +33,11 @@ public class GestorBBDD {
 		String sql;
 		PreparedStatement ps;
 		sql = "Delete * from PRODUCTOS where IDProd=? and Nombre=?;";
-		ps = conex.prepareStatement(sql);
 		try {
+			ps = conex.prepareStatement(sql);
 			ps.setInt(1, p.getIdProducto());
 			ps.setString(2, p.getNombrePro());
+			ps.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,8 +48,9 @@ public class GestorBBDD {
 		String sql;
 		PreparedStatement ps;
 		sql = "Update PRODUCTOS set Nombre=?, Precio=?, FechaCaducidad=?, Stock=? WHERE IDProd=?;";
-		ps = conex.prepareStatement(sql);
+
 		try {
+			ps = conex.prepareStatement(sql);
 			ps.setString(1, p.getNombrePro());
 			ps.setFloat(2, p.getPrecioUnidad());
 			ps.setString(3, sdf.format(p.getFechaCaducidad()));
@@ -66,18 +65,19 @@ public class GestorBBDD {
 
 	public ArrayList<Producto> listarProductos() {
 		String sql;
-		ResultSet rs;
+		ResultSet rs = null;
 		sql = "Select * From PRODUCTOS;";
-		rs = (ResultSet) conex.prepareStatement(sql);
-		ArrayList<Producto> listado = new ArrayList<Producto>();
+		ArrayList<Producto> listado = null;
 		try {
+			PreparedStatement ps = conex.prepareStatement(sql);
+			listado = new ArrayList<Producto>();
 			Integer idProd = rs.getInt("IDProd");
 			String nombre = rs.getString("Nombre");
 			float precio = rs.getFloat("Precio");
 			Date fechaCad = sdf.parse(rs.getString("FechaCaducidad"));
 			Integer stock = rs.getInt("Stock");
 
-			Producto prod = new Producto(idProd, nombre, precio, fechaCad, stock);
+			Producto prod = new Producto(nombre, precio, fechaCad, stock);
 			listado.add(prod);
 		} catch (SQLException | ParseException e) {
 			// TODO Auto-generated catch block
@@ -86,18 +86,20 @@ public class GestorBBDD {
 
 		return listado;
 	}
+
 	public ArrayList<Producto> listarCompra() {
 		String sql;
-		ResultSet rs;
+		ResultSet rs = null;
 		sql = "Select * From PRODUCTOS;";
-		rs = (ResultSet) conex.prepareStatement(sql);
-		ArrayList<Producto> listado = new ArrayList<Producto>();
+		ArrayList<Producto> listado = null;
 		try {
+			PreparedStatement ps = conex.prepareStatement(sql);
+			listado = new ArrayList<Producto>();
 			String nombre = rs.getString("Nombre");
 			float precio = rs.getFloat("Precio");
 			Integer stock = rs.getInt("Stock");
 
-			Producto prod = new Producto(nombre,stock,precio);
+			Producto prod = new Producto(nombre, stock, precio);
 			listado.add(prod);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
