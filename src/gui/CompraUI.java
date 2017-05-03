@@ -50,14 +50,12 @@ public class CompraUI extends JFrame {
 	 */
 	public CompraUI() {
 		setTitle("COMPRAR");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				dispose();
 			}
 		});
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 486, 362);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
