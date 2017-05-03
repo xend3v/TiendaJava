@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import SQLite.GestorBBDD;
 import model.Producto;
 
 import javax.swing.JScrollPane;
@@ -28,27 +29,11 @@ public class CompraUI extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTable table;
+	private GestorBBDD gbd;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CompraUI frame = new CompraUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
-	public CompraUI() {
+	public CompraUI(GestorBBDD gbd) {
+		this.gbd = gbd;
 		setTitle("COMPRAR");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {

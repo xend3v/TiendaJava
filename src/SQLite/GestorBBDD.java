@@ -25,7 +25,7 @@ public class GestorBBDD {
 			ps.setInt(4, p.getStock());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("Error en GestorBBDD linea 28: " + e);
+			e.printStackTrace();
 		}
 	}
 

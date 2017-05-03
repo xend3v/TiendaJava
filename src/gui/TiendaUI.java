@@ -11,6 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SQLite.GestorBBDD;
+
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -18,8 +21,7 @@ import javax.swing.JButton;
 public class TiendaUI extends JFrame {
 
 	private JPanel contentPane;
-	private CrearProductoUI cp = new CrearProductoUI();
-
+	private GestorBBDD gbd = new GestorBBDD();
 	/**
 	 * Launch the application.
 	 */
@@ -93,17 +95,17 @@ public class TiendaUI extends JFrame {
 	}
 
 	private void btnCrear() {
-		CrearProductoUI frmCrear = new CrearProductoUI();
+		CrearProductoUI frmCrear = new CrearProductoUI(gbd);
 		frmCrear.setVisible(true);
 	}
 
 	private void btnListado() {
-		ListadoUI frmListado = new ListadoUI();
+		ListadoUI frmListado = new ListadoUI(gbd);
 		frmListado.setVisible(true);
 	}
 
 	private void btnComprar() {
-		CompraUI frmComprar = new CompraUI();
+		CompraUI frmComprar = new CompraUI(gbd);
 		frmComprar.setVisible(true);
 	}
 

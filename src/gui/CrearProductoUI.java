@@ -30,28 +30,13 @@ public class CrearProductoUI extends JFrame {
 	private JTextField textStock;
 	private JTextField textFechaCad;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	private GestorBBDD gbd = new GestorBBDD();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CrearProductoUI frame = new CrearProductoUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private GestorBBDD gbd;
 	/**
 	 * Create the frame.
+	 * @param gbd 
 	 */
-	public CrearProductoUI() {
+	public CrearProductoUI(GestorBBDD gbd) {
+		this.gbd = gbd;
 		setTitle("A\u00D1ADIR PRODUCTO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {

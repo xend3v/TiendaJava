@@ -8,6 +8,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SQLite.GestorBBDD;
+
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -22,27 +25,14 @@ public class ListadoUI extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private GestorBBDD gbd;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListadoUI frame = new ListadoUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ListadoUI() {
+	public ListadoUI(GestorBBDD gbd) {
+		this.gbd = gbd;
 		setTitle("MODIFICAR PRODUCTO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
