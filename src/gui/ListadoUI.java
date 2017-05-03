@@ -1,19 +1,21 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import SQLite.GestorBBDD;
+import model.Producto;
 
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,6 +35,7 @@ public class ListadoUI extends JFrame {
 	 */
 	public ListadoUI(GestorBBDD gbd) {
 		this.gbd = gbd;
+		listado();
 		setTitle("MODIFICAR PRODUCTO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -88,6 +91,11 @@ public class ListadoUI extends JFrame {
 		contentPane.add(lblFechaCaducidad);
 
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificarProd();
+			}
+		});
 		btnModificar.setBounds(221, 145, 107, 23);
 		contentPane.add(btnModificar);
 
@@ -101,7 +109,25 @@ public class ListadoUI extends JFrame {
 		contentPane.add(btnAtrs);
 
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarProd();
+			}
+		});
 		btnEliminar.setBounds(221, 179, 107, 23);
 		contentPane.add(btnEliminar);
+	}
+	public void listado(ArrayList <Producto> listarProductos){
+		DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
+		for(Producto p : listarProductos){
+			dlm.addElement(p);
+		}
+		listarProductos.setModel(dlm);
+	}
+	public void modificarProd(){
+		
+	}
+	public void eliminarProd(){
+		
 	}
 }
