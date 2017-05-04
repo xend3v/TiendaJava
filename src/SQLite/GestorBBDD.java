@@ -65,20 +65,22 @@ public class GestorBBDD {
 
 	public ArrayList<Producto> listarProductos() {
 		String sql;
-		ResultSet rs = null;
 		sql = "Select * From PRODUCTOS;";
-		ArrayList<Producto> listado = null;
+		ArrayList<Producto> listado = new ArrayList<Producto>();
 		try {
 			PreparedStatement ps = conex.prepareStatement(sql);
-			listado = new ArrayList<Producto>();
-			Integer idProd = rs.getInt("IDProd");
-			String nombre = rs.getString("Nombre");
-			float precio = rs.getFloat("Precio");
-			Date fechaCad = sdf.parse(rs.getString("FechaCaducidad"));
-			Integer stock = rs.getInt("Stock");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Integer idProd = rs.getInt("IDProd");
+				String nombre = rs.getString("Nombre");
+				float precio = rs.getFloat("Precio");
+				Date fechaCad = sdf.parse(rs.getString("FechaCaducidad"));
+				Integer stock = rs.getInt("Stock");
 
-			Producto prod = new Producto(nombre, precio, fechaCad, stock);
-			listado.add(prod);
+				Producto prod = new Producto(idProd, nombre, precio, fechaCad, stock);
+				listado.add(prod);
+			}
+			rs.close();
 		} catch (SQLException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,18 +91,19 @@ public class GestorBBDD {
 
 	public ArrayList<Producto> listarCompra() {
 		String sql;
-		ResultSet rs = null;
 		sql = "Select * From PRODUCTOS;";
 		ArrayList<Producto> listado = null;
 		try {
 			PreparedStatement ps = conex.prepareStatement(sql);
-			listado = new ArrayList<Producto>();
-			String nombre = rs.getString("Nombre");
-			float precio = rs.getFloat("Precio");
-			Integer stock = rs.getInt("Stock");
-
-			Producto prod = new Producto(nombre, stock, precio);
-			listado.add(prod);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				listado = new ArrayList<Producto>();
+				String nombre = rs.getString("Nombre");
+				float precio = rs.getFloat("Precio");
+				Integer stock = rs.getInt("Stock");
+				Producto prod = new Producto(nombre, stock, precio);
+				listado.add(prod);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

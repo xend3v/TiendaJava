@@ -29,6 +29,14 @@ public class Producto {
 		this.fechaCaducidad = fechaCaducidad;
 	}
 
+	public Producto(Integer idProd, String nombrePro, float precioUnidad, Date fechaCaducidad, int stock) {
+		this.idProducto = idProd;
+		this.nombrePro = nombrePro;
+		this.stock = stock;
+		this.precioUnidad = precioUnidad;
+		this.fechaCaducidad = fechaCaducidad;
+	}
+
 	/*
 	 * public ArrayList <Producto> listProductoCompra(){ Producto listaCompra =
 	 * new Producto (nombrePro, stock, precioUnidad);
@@ -80,7 +88,7 @@ public class Producto {
 	// Mostrar lista de compra
 	@Override
 	public String toString() {
-		return nombrePro + ":" + stock + ":" + precioUnidad + ":" + sdf.format(fechaCaducidad);
+		return "ID: " + idProducto + "  ||  Nombre: " +nombrePro;
 	}
 
 	// Comprobar que no se inserten productos con mismo ID y nombre
