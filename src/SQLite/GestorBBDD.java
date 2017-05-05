@@ -14,8 +14,9 @@ import model.ModeloRelleno;
 import model.Producto;
 
 public class GestorBBDD {
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
 	ConexionSQLite conex = new ConexionSQLite();
+	Date fecha = new Date();
 
 	public void crear(Producto p) {
 		PreparedStatement ps = null;
@@ -119,5 +120,18 @@ public class GestorBBDD {
 		}
 
 		return listado;
+	}
+	public void comprar(Producto p){
+		PreparedStatement ps = null;
+		String sql = "INSERT INTO COMPRAS (PrecioTotal, FechaCompra, Cantidad) VALUES(?, ?, ?);";
+		try {
+			ps = conex.prepareStatement(sql);
+			ps.setFloat(1, p.getPrecioUnidad());
+			ps.setString(2, sdf.format(fecha));
+			ps.setInt(3, );
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

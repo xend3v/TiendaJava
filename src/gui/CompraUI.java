@@ -34,6 +34,7 @@ public class CompraUI extends JFrame {
 	private GestorBBDD gbd;
 	private JTextField textField;
 	private DefaultTableModel modelo;
+	private JList list;
 
 	public CompraUI(GestorBBDD gbd) {
 		this.gbd = gbd;
@@ -84,6 +85,7 @@ public class CompraUI extends JFrame {
 		JButton btnComprar = new JButton("Comprar");
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				comprarCarrito();
 			}
 		});
 		btnComprar.setBounds(374, 224, 86, 36);
@@ -110,7 +112,7 @@ public class CompraUI extends JFrame {
 		lblPrecioTotal.setBounds(265, 224, 86, 14);
 		contentPane.add(lblPrecioTotal);
 		
-		JList list = new JList();
+		list = new JList();
 		list.setBounds(33, 215, 222, 79);
 		contentPane.add(list);
 		
@@ -124,7 +126,15 @@ public class CompraUI extends JFrame {
 			System.out.println("has terminado");
 		}
 	}
-	public void addCarrito(){
+	public void addCarrito(ArrayList<Producto> lstProductos){
+		/*DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
+		for (Producto p : lstProductos) {
+			dlm.addElement(p);
+		}
+		list.setModel(dlm);
+		*/
+	}
+	public void comprarCarrito(){
 		
 	}
 }
