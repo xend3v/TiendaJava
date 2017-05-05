@@ -6,10 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import SQLite.GestorBBDD;
 import model.Producto;
@@ -17,20 +19,21 @@ import model.Producto;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.JList;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
+import java.awt.Font;
 
 public class CompraUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTable table;
 	private GestorBBDD gbd;
-
+	private JTextField textField;
+	private DefaultTableModel modelo;
 
 	public CompraUI(GestorBBDD gbd) {
 		this.gbd = gbd;
@@ -47,62 +50,81 @@ public class CompraUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(346, 50, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
-
-		JLabel lblProducto = new JLabel("Producto:");
-		lblProducto.setBounds(346, 25, 71, 14);
-		contentPane.add(lblProducto);
-
-		JLabel lblPrecio = new JLabel("Precio:");
-		lblPrecio.setBounds(346, 82, 46, 14);
-		contentPane.add(lblPrecio);
-
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		textField_1.setBounds(346, 107, 86, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
-
 		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setBounds(346, 138, 71, 14);
+		lblCantidad.setBounds(338, 20, 86, 25);
 		contentPane.add(lblCantidad);
 
-		JButton btnSalir = new JButton("Salir");
+		JButton btnSalir = new JButton("Atras");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(346, 249, 89, 23);
+		btnSalir.setBounds(374, 271, 89, 23);
 		contentPane.add(btnSalir);
 
 		JButton btnNewButton = new JButton("A\u00F1adir");
-		btnNewButton.setBounds(272, 215, 71, 23);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addCarrito();
+			}
+		});
+		btnNewButton.setBounds(338, 109, 86, 23);
 		contentPane.add(btnNewButton);
 
 		JSpinner spinner = new JSpinner();
-		spinner.setBounds(346, 163, 86, 20);
+		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spinner.setBounds(338, 56, 86, 42);
 		contentPane.add(spinner);
-
-		textField_2 = new JTextField();
-		textField_2.setBounds(33, 215, 222, 79);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
 
 		JLabel lblCarrito = new JLabel("Carrito:");
 		lblCarrito.setBounds(33, 190, 46, 14);
 		contentPane.add(lblCarrito);
 
 		JButton btnComprar = new JButton("Comprar");
-		btnComprar.setBounds(346, 215, 86, 23);
+		btnComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnComprar.setBounds(374, 224, 86, 36);
 		contentPane.add(btnComprar);
+	
+		modelo = new DefaultTableModel();
+		modelo.addColumn("Nombre");
+		modelo.addColumn("Precio");
 		
-		table = new JTable();
-		table.setBounds(33, 25, 266, 158);
-		contentPane.add(table);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(33, 25, 222, 158);
+		contentPane.add(scrollPane);
+		table = new JTable(modelo);
+		scrollPane.setViewportView(table);
+
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		textField.setBounds(265, 249, 86, 45);
+		contentPane.add(textField);
+		textField.setColumns(10);
+
+		JLabel lblPrecioTotal = new JLabel("Precio total:");
+		lblPrecioTotal.setBounds(265, 224, 86, 14);
+		contentPane.add(lblPrecioTotal);
+		
+		JList list = new JList();
+		list.setBounds(33, 215, 222, 79);
+		contentPane.add(list);
+		
+		listado();
+
+	}
+
+	public void listado() {
+		for (Producto p : gbd.listarCompra()) {
+			modelo.addRow(new Object[] { p.getNombrePro(), p.getPrecioUnidad()});
+			System.out.println("has terminado");
+		}
+	}
+	public void addCarrito(){
+		
 	}
 }

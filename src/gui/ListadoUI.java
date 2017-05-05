@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -97,7 +98,7 @@ public class ListadoUI extends JFrame {
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modificarProd((Producto) list.getSelectedValue());
+				modificarProd();
 			}
 		});
 		btnModificar.setBounds(221, 145, 107, 23);
@@ -148,10 +149,27 @@ public class ListadoUI extends JFrame {
 
 	}
 
-	public void modificarProd(Producto p) {
-		if (list.getSelectedIndex() >= 0) {
-			System.out.println("Producto a actualizar: " + p.mostrarProducto());
-			gbd.modificar(p);
+	/**
+	 * 
+	 * @descripcion	Del @see Producto seleccionado en la lista,
+	 * 				modificar los campos de los textfields en
+	 * 				p_seleccionado, luego modificar en la base
+	 * 				de datos y finalmente mostrar los cambios en la lista.
+	 */
+	public void modificarProd() {
+		int posicion = list.getSelectedIndex();
+		if (posicion >= 0) {
+			Producto p_seleccionado = (Producto) list.getSelectedValue();
+			p_seleccionado.setNombrePro(textNombre.getText());
+			p_seleccionado.setStock(Integer.parseInt(textStock.getText()));
+			p_seleccionado.setPrecioUnidad(Float.parseFloat(textStock.getText()));
+			try {
+				p_seleccionado.setFechaCaducidad(sdf.parse(textFechaCad.getText()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			gbd.modificar(p_seleccionado);
 			listado(gbd.listarProductos());
 		}
 	}

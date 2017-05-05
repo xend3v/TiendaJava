@@ -10,6 +10,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import model.ModeloRelleno;
 import model.Producto;
 
 public class GestorBBDD {
@@ -101,16 +102,15 @@ public class GestorBBDD {
 	public ArrayList<Producto> listarCompra() {
 		String sql;
 		sql = "Select * From PRODUCTOS;";
-		ArrayList<Producto> listado = null;
+		ArrayList<Producto> listado = new ArrayList<Producto>();;
 		try {
 			PreparedStatement ps = conex.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				listado = new ArrayList<Producto>();
 				String nombre = rs.getString("Nombre");
 				float precio = rs.getFloat("Precio");
 				Integer stock = rs.getInt("Stock");
-				Producto prod = new Producto(nombre, stock, precio);
+				Producto prod = new Producto(ModeloRelleno.IDPRODUCTO, nombre, precio, ModeloRelleno.FECHACADUCIDAD, stock);
 				listado.add(prod);
 			}
 		} catch (SQLException e) {

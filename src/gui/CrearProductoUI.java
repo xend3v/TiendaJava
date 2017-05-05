@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import SQLite.GestorBBDD;
+import model.ModeloRelleno;
 import model.Producto;
 
 import javax.swing.JLabel;
@@ -118,7 +119,7 @@ public class CrearProductoUI extends JFrame {
 //			e.printStackTrace();
 		}
 		Integer stock = Integer.parseInt(textStock.getText());
-		Producto addProducto= new Producto(nombre, precio, fechaCad, stock);
+		Producto addProducto= new Producto(ModeloRelleno.IDPRODUCTO,nombre, precio, fechaCad, stock);
 		gbd.crear(addProducto);
 		JOptionPane.showMessageDialog(this,"Se ha añadido un nuevo producto.");
 		dispose();
