@@ -127,6 +127,9 @@ public class CompraUI extends JFrame {
 		}
 	}
 	public void addCarrito(ArrayList<Producto> lstProductos){
+		
+		
+		
 		/*DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
 		for (Producto p : lstProductos) {
 			dlm.addElement(p);

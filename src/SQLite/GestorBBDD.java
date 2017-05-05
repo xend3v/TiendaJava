@@ -128,7 +128,7 @@ public class GestorBBDD {
 			ps = conex.prepareStatement(sql);
 			ps.setFloat(1, p.getPrecioUnidad());
 			ps.setString(2, sdf.format(fecha));
-			ps.setInt(3, );
+			ps.setInt(3, spinner );
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
