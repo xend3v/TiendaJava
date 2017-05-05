@@ -97,7 +97,7 @@ public class ListadoUI extends JFrame {
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modificarProd();
+				modificarProd((Producto) list.getSelectedValue());
 			}
 		});
 		btnModificar.setBounds(221, 145, 107, 23);
@@ -115,7 +115,7 @@ public class ListadoUI extends JFrame {
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eliminarProd();
+					eliminarProd((Producto) list.getSelectedValue());
 			}
 		});
 		btnEliminar.setBounds(221, 179, 107, 23);
@@ -140,16 +140,6 @@ public class ListadoUI extends JFrame {
 		}
 		list.setModel(dlm);
 	}
-
-	public void modificarProd() {
-		
-		
-	}
-
-	public void eliminarProd() {
-
-	}
-
 	public void datosLista(Producto p) {
 		textNombre.setText(p.getNombrePro());
 		textStock.setText(Integer.toString(p.getStock()));
@@ -157,5 +147,23 @@ public class ListadoUI extends JFrame {
 		textFechaCad.setText(sdf.format(p.getFechaCaducidad()));
 
 	}
+
+	public void modificarProd(Producto p) {
+		if (list.getSelectedIndex() >= 0) {
+			System.out.println("Producto a actualizar: " + p.mostrarProducto());
+			gbd.modificar(p);
+			listado(gbd.listarProductos());
+		}
+	}
+
+	public void eliminarProd(Producto p) {
+		if (list.getSelectedIndex() >= 0) {
+			gbd.eliminar(p);
+			listado(gbd.listarProductos());
+		}
+		
+	}
+
+	
 
 }

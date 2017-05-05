@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import model.Producto;
 
 public class GestorBBDD {
@@ -30,14 +32,21 @@ public class GestorBBDD {
 	}
 
 	public void eliminar(Producto p) {
-		String sql;
-		PreparedStatement ps;
-		sql = "Delete * from PRODUCTOS where IDProd=? and Nombre=?;";
 		try {
+			String sql;
+			PreparedStatement ps;
+			sql = "Delete from PRODUCTOS where IDProd=? and Nombre=?;";
 			ps = conex.prepareStatement(sql);
 			ps.setInt(1, p.getIdProducto());
 			ps.setString(2, p.getNombrePro());
-			ps.executeQuery();
+			int cant_borradas = ps.executeUpdate();
+			
+			if(cant_borradas==1){
+				JOptionPane.showMessageDialog(null, "Se ha borrado "+ p.getNombrePro());
+			}
+			else{
+				JOptionPane.showMessageDialog(null,"No se ha podido borrar.");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
