@@ -67,7 +67,7 @@ public class CompraUI extends JFrame {
 		JButton btnNewButton = new JButton("A\u00F1adir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addCarrito();
+			//addCarrito();
 			}
 		});
 		btnNewButton.setBounds(338, 109, 86, 23);
@@ -126,7 +126,8 @@ public class CompraUI extends JFrame {
 			System.out.println("has terminado");
 		}
 	}
-	public void addCarrito(ArrayList<Producto> lstProductos){
+
+	public void addCarrito(ArrayList<Producto> lstCompras){
 		
 		
 		

@@ -117,7 +117,7 @@ public class TiendaUI extends JFrame {
 	}
 	
 	private void btnHistorial(){
-		HistorialUI frmHistorial = new HistorialUI();
+		HistorialUI frmHistorial = new HistorialUI(gbd);
 		frmHistorial.setVisible(true);
 	}
 	

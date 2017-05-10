@@ -10,11 +10,13 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import model.Compras;
 import model.ModeloRelleno;
 import model.Producto;
 
 public class GestorBBDD {
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+	private SimpleDateFormat sdft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	ConexionSQLite conex = new ConexionSQLite();
 	Date fecha = new Date();
 
@@ -128,10 +130,29 @@ public class GestorBBDD {
 			ps = conex.prepareStatement(sql);
 			ps.setFloat(1, p.getPrecioUnidad());
 			ps.setString(2, sdf.format(fecha));
-			ps.setInt(3, spinner );
+		//	ps.setInt(3, );
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public ArrayList<Producto> listadoHistorial(){
+		String sql="SELECT IDCompra,Precio,FechaCompra  from COMPRAS ORDER BY FechaCompra;";
+		ResultSet rs = null;
+		ArrayList<Producto> listado = new ArrayList<Producto>();;
+		try {
+			PreparedStatement ps = conex.prepareStatement(sql);
+			Integer idCompra = rs.getInt("IDCompra");
+			float precio = rs.getFloat("PrecioTotal");
+			Date fechaCompra = sdf.parse(rs.getString("FechaCompra"));
+
+			Compras compra = new Compras(idCompra, precio, fechaCompra);
+			listado.add(compra);
+		} catch (SQLException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return listado;
 	}
 }

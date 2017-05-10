@@ -13,9 +13,9 @@ public class Producto {
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private ArrayList<Producto> listCompra = new ArrayList<Producto>();
 	private ArrayList<Producto> listProductos = new ArrayList<Producto>();
-
+	/*
 	// Constructora para mostrar la lista de compra
-	/*public Producto(String nombrePro, int stock, float precioUnidad) {
+	public Producto(String nombrePro, int stock, float precioUnidad) {
 		this.nombrePro = nombrePro;
 		this.stock = stock;
 		this.precioUnidad = precioUnidad;
@@ -27,8 +27,10 @@ public class Producto {
 		this.stock = stock;
 		this.precioUnidad = precioUnidad;
 		this.fechaCaducidad = fechaCaducidad;
-	}*/
-	//Constructor de todo
+	}
+
+	*/
+	// Constructor de todo
 	public Producto(Integer idProd, String nombrePro, float precioUnidad, Date fechaCaducidad, int stock) {
 		this.idProducto = idProd;
 		this.nombrePro = nombrePro;
@@ -88,11 +90,11 @@ public class Producto {
 	// Mostrar lista de compra
 	@Override
 	public String toString() {
-		return "ID: " + idProducto + "  ||  Nombre: " +nombrePro;
+		return "ID: " + idProducto + "  ||  Nombre: " + nombrePro;
 	}
-	
+
 	public String mostrarProducto() {
-		return  idProducto+ "-" +  nombrePro+ "-" +  precioUnidad+ "-" +  sdf.format(fechaCaducidad)+ "-" +  stock;
+		return idProducto + "-" + nombrePro + "-" + precioUnidad + "-" + sdf.format(fechaCaducidad) + "-" + stock;
 	}
 
 	// Comprobar que no se inserten productos con mismo ID y nombre

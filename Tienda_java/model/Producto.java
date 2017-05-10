@@ -67,7 +67,7 @@ public class Producto {
 	//Constructora para tabla compras
 	public Producto (int idCompra, float precio, Date fechaCompra){
 		this.idCompra=idCompra;
-		this.precioTotal=precioTotal;
+		this.precio=precioTotal;
 		this.FechaCompra=FechaCompra;
 		
 	}
