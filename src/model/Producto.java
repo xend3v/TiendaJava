@@ -13,14 +13,14 @@ public class Producto {
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private ArrayList<Producto> listCompra = new ArrayList<Producto>();
 	private ArrayList<Producto> listProductos = new ArrayList<Producto>();
-	/*
+	
 	// Constructora para mostrar la lista de compra
 	public Producto(String nombrePro, int stock, float precioUnidad) {
 		this.nombrePro = nombrePro;
 		this.stock = stock;
 		this.precioUnidad = precioUnidad;
 	}
-
+ /*
 	// Constructora que muestra todos los atributos de producto
 	public Producto(String nombrePro, float precioUnidad, Date fechaCaducidad, int stock) {
 		this.nombrePro = nombrePro;

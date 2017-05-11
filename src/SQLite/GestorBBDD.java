@@ -59,9 +59,8 @@ public class GestorBBDD {
 
 	public void modificar(Producto p) {
 		String sql;
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		sql = "Update PRODUCTOS set Nombre=?, Precio=?, FechaCaducidad=?, Stock=? WHERE IDProd=?;";
-
 		try {
 			ps = conex.prepareStatement(sql);
 			ps.setString(1, p.getNombrePro());
@@ -69,7 +68,13 @@ public class GestorBBDD {
 			ps.setString(3, sdf.format(p.getFechaCaducidad()));
 			ps.setInt(4, p.getStock());
 			ps.setInt(5, p.getIdProducto());
-			ps.executeUpdate();
+			int mod = ps.executeUpdate();
+			if(mod==1){
+				JOptionPane.showMessageDialog(null, "Se ha modificado "+ p.getNombrePro());
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "No se ha podido modificar");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,7 +118,7 @@ public class GestorBBDD {
 				String nombre = rs.getString("Nombre");
 				float precio = rs.getFloat("Precio");
 				Integer stock = rs.getInt("Stock");
-				Producto prod = new Producto(ModeloRelleno.IDPRODUCTO, nombre, precio, ModeloRelleno.FECHACADUCIDAD, stock);
+				Producto prod = new Producto(nombre, stock, precio);
 				listado.add(prod);
 			}
 		} catch (SQLException e) {
@@ -123,31 +128,34 @@ public class GestorBBDD {
 
 		return listado;
 	}
-	public void comprar(Producto p){
+	public void comprar(Compras c){
 		PreparedStatement ps = null;
 		String sql = "INSERT INTO COMPRAS (PrecioTotal, FechaCompra, Cantidad) VALUES(?, ?, ?);";
 		try {
 			ps = conex.prepareStatement(sql);
-			ps.setFloat(1, p.getPrecioUnidad());
-			ps.setString(2, sdf.format(fecha));
-		//	ps.setInt(3, );
-			ps.executeUpdate();
+			ps.setFloat(1, c.getPrecioUnidad());
+			ps.setString(2, sdft.format(fecha));
+		//	ps.setInt(3, spinner);
+			ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<Producto> listadoHistorial(){
-		String sql="SELECT IDCompra,Precio,FechaCompra  from COMPRAS ORDER BY FechaCompra;";
-		ResultSet rs = null;
-		ArrayList<Producto> listado = new ArrayList<Producto>();;
+	public ArrayList<Compras> listadoHistorial(){
+		String sql="SELECT * from COMPRAS ORDER BY FechaCompra;";
+		
+		ArrayList<Compras> listado = new ArrayList<Compras>();
 		try {
 			PreparedStatement ps = conex.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {			
 			Integer idCompra = rs.getInt("IDCompra");
 			float precio = rs.getFloat("PrecioTotal");
-			Date fechaCompra = sdf.parse(rs.getString("FechaCompra"));
+			Date fechaCompra = sdft.parse(rs.getString("FechaCompra"));
 
 			Compras compra = new Compras(idCompra, precio, fechaCompra);
 			listado.add(compra);
+			}
 		} catch (SQLException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

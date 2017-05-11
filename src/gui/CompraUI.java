@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import SQLite.GestorBBDD;
+import model.Compras;
 import model.Producto;
 
 import javax.swing.JScrollPane;
@@ -123,11 +124,11 @@ public class CompraUI extends JFrame {
 	public void listado() {
 		for (Producto p : gbd.listarCompra()) {
 			modelo.addRow(new Object[] { p.getNombrePro(), p.getPrecioUnidad()});
-			System.out.println("has terminado");
+			//System.out.println("has terminado");
 		}
 	}
 
-	public void addCarrito(ArrayList<Producto> lstCompras){
+	public void addCarrito(ArrayList<Compras> lstCompras){
 		
 		
 		

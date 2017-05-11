@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import SQLite.GestorBBDD;
 import model.ModeloRelleno;
 import model.Producto;
+import model.Compras;
 
 public class HistorialUI extends JFrame {
 
@@ -70,12 +71,12 @@ public class HistorialUI extends JFrame {
 
 	private void tablaFilas(JTable tabla)
 	{
-		ArrayList<Producto> listado = gbd.listadoHistorial();
+		ArrayList<Compras> listado = gbd.listadoHistorial();
 	// se crea un modelo para la tabla, el nombre de la variable de la tabla es: tabla
 	DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
 	//para agregar valores en la fila
-		for(Producto cursor_compra: listado){ 
-			Object[] datos_compra = new Object[]{cursor_compra.getIdProducto(), 
+		for(Compras cursor_compra: listado){ 
+			Object[] datos_compra = new Object[]{cursor_compra.getIdCompra(), 
 					cursor_compra.getPrecioTotal(), 
 					ModeloRelleno.deFechaAString(cursor_compra.getFechaCompra())};
 			modelo.addRow(datos_compra);

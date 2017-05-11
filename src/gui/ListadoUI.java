@@ -162,7 +162,7 @@ public class ListadoUI extends JFrame {
 			Producto p_seleccionado = (Producto) list.getSelectedValue();
 			p_seleccionado.setNombrePro(textNombre.getText());
 			p_seleccionado.setStock(Integer.parseInt(textStock.getText()));
-			p_seleccionado.setPrecioUnidad(Float.parseFloat(textStock.getText()));
+			p_seleccionado.setPrecioUnidad(Float.parseFloat(textPrecio.getText()));
 			try {
 				p_seleccionado.setFechaCaducidad(sdf.parse(textFechaCad.getText()));
 			} catch (ParseException e) {
@@ -171,6 +171,7 @@ public class ListadoUI extends JFrame {
 			}
 			gbd.modificar(p_seleccionado);
 			listado(gbd.listarProductos());
+			System.out.println("Has llegado a modificar");
 		}
 	}
 
