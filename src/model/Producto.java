@@ -1,52 +1,62 @@
 package model;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Producto {
 	private int idProducto;
+	private int idCompra;
 	private String nombrePro;
 	private int stock;
 	private float precioUnidad;
+	private float precioTotal;
 	private Date fechaCaducidad;
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private Date fechaCompra;
 	private ArrayList<Producto> listCompra = new ArrayList<Producto>();
 	private ArrayList<Producto> listProductos = new ArrayList<Producto>();
-	
-	// Constructora para mostrar la lista de compra
-	public Producto(String nombrePro, int stock, float precioUnidad) {
+
+
+	// Constructora que muestra todos los atributos de producto
+	public Producto( int idProducto, String nombrePro, float precioUnidad, Date fechaCaducidad, int stock) {
+		this.idProducto = idProducto;
 		this.nombrePro = nombrePro;
 		this.stock = stock;
 		this.precioUnidad = precioUnidad;
+		this.fechaCaducidad = fechaCaducidad;
 	}
- /*
-	// Constructora que muestra todos los atributos de producto
+	
+	//Constructora para añadir productos
 	public Producto(String nombrePro, float precioUnidad, Date fechaCaducidad, int stock) {
 		this.nombrePro = nombrePro;
 		this.stock = stock;
 		this.precioUnidad = precioUnidad;
 		this.fechaCaducidad = fechaCaducidad;
 	}
-
-	*/
-	// Constructor de todo
-	public Producto(Integer idProd, String nombrePro, float precioUnidad, Date fechaCaducidad, int stock) {
-		this.idProducto = idProd;
-		this.nombrePro = nombrePro;
-		this.stock = stock;
-		this.precioUnidad = precioUnidad;
-		this.fechaCaducidad = fechaCaducidad;
+		
+	public int getIdCompra() {
+		return idCompra;
 	}
 
-	/*
-	 * public ArrayList <Producto> listProductoCompra(){ Producto listaCompra =
-	 * new Producto (nombrePro, stock, precioUnidad);
-	 * listCompra.add(listaCompra); return listCompra; } public ArrayList
-	 * <Producto> listaProductos(){ Producto listaProd = new Producto
-	 * (idProducto, nombrePro, stock, precioUnidad, fechaCaducidad);
-	 * listProductos.add(listaProd); return listProductos; }
-	 */
+	public void setIdCompra(int idCompra) {
+		this.idCompra = idCompra;
+	}
+
+	public float getPrecioTotal() {
+		return precioTotal;
+	}
+
+	public void setPrecioTotal(float precioTotal) {
+		this.precioTotal = precioTotal;
+	}
+
+	public Date getFechaCompra() {
+		return fechaCompra;
+	}
+
+	public void setFechaCompra(Date fechaCompra) {
+		this.fechaCompra = fechaCompra;
+	}
+
 	public int getIdProducto() {
 		return idProducto;
 	}
@@ -90,11 +100,7 @@ public class Producto {
 	// Mostrar lista de compra
 	@Override
 	public String toString() {
-		return "ID: " + idProducto + "  ||  Nombre: " + nombrePro;
-	}
-
-	public String mostrarProducto() {
-		return idProducto + "-" + nombrePro + "-" + precioUnidad + "-" + sdf.format(fechaCaducidad) + "-" + stock;
+		return "ID "+idProducto + " || Nombre: " + nombrePro;
 	}
 
 	// Comprobar que no se inserten productos con mismo ID y nombre

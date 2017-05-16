@@ -14,10 +14,10 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import SQLite.GestorBBDD;
+import manager.GestorBBDD;
+import model.Compras;
 import model.ModeloRelleno;
 import model.Producto;
-import model.Compras;
 
 public class HistorialUI extends JFrame {
 
@@ -53,8 +53,13 @@ public class HistorialUI extends JFrame {
 		contentPane.add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "IdCompra", "Cantidad", "Precio Total", "Fecha de Compra" }));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"IdCompra", "PrecioTotal", "FechaCompra"
+			}
+		));
 		//mostrar historial compras
 		tablaFilas(table);
 		scrollPane.setViewportView(table);

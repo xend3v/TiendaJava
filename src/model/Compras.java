@@ -1,18 +1,19 @@
 package model;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Date;
 
 public class Compras {
 	private int idCompra;
-	//private int idProducto;
+	private int idProducto;
 	
 	private String nombreProducto;
 	private float precioUnidad;
 	private float precioTotal;
 	private int cantidadUnidad;
 	private Date fechaCompra;
-	private ArrayList<Compras> listCompra = new ArrayList<Compras>();
+	private int Stock;
+	//private ArrayList<Compras> listCompra = new ArrayList<Compras>();
 	
 	//Constructora para tabla compras sql
 		public Compras (String nombreProducto, float precioUnidad, float precioTotal, int cantidadUnidad, Date fechaCompra){
@@ -29,6 +30,11 @@ public class Compras {
 			 this.idCompra=idCompra;
 			 this.precioTotal=precioTotal;
 			 this.fechaCompra=fechaCompra;		 
+		 }
+		 //constructora para mostrar lista de compra
+		 public Compras (String nombreProd, float precioUnidad){
+			 this.nombreProducto = nombreProd;
+			 this.precioUnidad = precioUnidad;
 		 }
 		
 	//metodos Getters and Setters	 
@@ -86,7 +92,16 @@ public class Compras {
 	public void setFechaCompra(Date fechaCompra) {
 		this.fechaCompra = fechaCompra;
 	}
-
+	public int getStock() {
+		return Stock;
+	}
+	public void setStock(int stock) {
+		Stock = stock;
+	}
+	@Override
+	public String toString(){
+		return "Nombre: " + nombreProducto + " || Precio: " + precioUnidad +"€";
+	}
 
 	
 }

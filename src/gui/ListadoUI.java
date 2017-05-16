@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 
-import SQLite.GestorBBDD;
+import manager.GestorBBDD;
 import model.Producto;
 
 import javax.swing.JList;
@@ -136,7 +136,7 @@ public class ListadoUI extends JFrame {
 
 	public void listado(ArrayList<Producto> lstProductos) {
 		DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
-		for (Producto p : lstProductos) {
+		for (Producto p : gbd.listarProductos()) {
 			dlm.addElement(p);
 		}
 		list.setModel(dlm);
@@ -171,7 +171,6 @@ public class ListadoUI extends JFrame {
 			}
 			gbd.modificar(p_seleccionado);
 			listado(gbd.listarProductos());
-			System.out.println("Has llegado a modificar");
 		}
 	}
 
@@ -186,3 +185,4 @@ public class ListadoUI extends JFrame {
 	
 
 }
+

@@ -12,8 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import SQLite.GestorBBDD;
-import model.ModeloRelleno;
+import manager.GestorBBDD;
 import model.Producto;
 
 import javax.swing.JLabel;
@@ -32,12 +31,16 @@ public class CrearProductoUI extends JFrame {
 	private JTextField textFechaCad;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private GestorBBDD gbd;
+
+	/**
+	 * Launch the application.
+	 */
+
 	/**
 	 * Create the frame.
-	 * @param gbd 
 	 */
 	public CrearProductoUI(GestorBBDD gbd) {
-		this.gbd = gbd;
+		this.gbd=gbd;
 		setTitle("A\u00D1ADIR PRODUCTO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -119,7 +122,7 @@ public class CrearProductoUI extends JFrame {
 //			e.printStackTrace();
 		}
 		Integer stock = Integer.parseInt(textStock.getText());
-		Producto addProducto= new Producto(ModeloRelleno.IDPRODUCTO,nombre, precio, fechaCad, stock);
+		Producto addProducto= new Producto(nombre, precio, fechaCad, stock);
 		gbd.crear(addProducto);
 		JOptionPane.showMessageDialog(this,"Se ha añadido un nuevo producto.");
 		dispose();

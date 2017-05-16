@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import SQLite.GestorBBDD;
+import manager.GestorBBDD;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
