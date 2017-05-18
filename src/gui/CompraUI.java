@@ -39,9 +39,9 @@ public class CompraUI extends JFrame {
 	private GestorBBDD gbd;
 	private JTextField textPrecioTotal;
 	private DefaultTableModel modelo;
-	private JList list;
 	private JList listaCompra;
 	private JSpinner spinner;
+	private JTable table;
 
 	public CompraUI(GestorBBDD gbd) {
 		this.gbd = gbd;
@@ -52,7 +52,7 @@ public class CompraUI extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 486, 362);
+		setBounds(100, 100, 500, 388);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,18 +68,21 @@ public class CompraUI extends JFrame {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(374, 271, 89, 23);
+		btnSalir.setBounds(385, 316, 89, 23);
 		contentPane.add(btnSalir);
 
 		JButton btnAdd = new JButton("A\u00F1adir");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				carrito();
-				addCarrito();
-			}
-		});
 		btnAdd.setBounds(338, 109, 86, 23);
 		contentPane.add(btnAdd);
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (listaCompra.getSelectedIndex()>=0){
+					carrito((Compras) listaCompra.getSelectedValue());
+					setPrecioTotal();
+				}
+			}
+		});
+
 
 		spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
@@ -96,40 +99,42 @@ public class CompraUI extends JFrame {
 				// comprarCarrito();
 			}
 		});
-		btnComprar.setBounds(374, 224, 86, 36);
+		btnComprar.setBounds(292, 271, 86, 36);
 		contentPane.add(btnComprar);
 
 		textPrecioTotal = new JTextField();
 		textPrecioTotal.setEditable(false);
 		textPrecioTotal.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		textPrecioTotal.setBounds(265, 249, 86, 45);
+		textPrecioTotal.setBounds(292, 215, 86, 45);
 		contentPane.add(textPrecioTotal);
 		textPrecioTotal.setColumns(10);
 
 		JLabel lblPrecioTotal = new JLabel("Precio total:");
-		lblPrecioTotal.setBounds(265, 224, 86, 14);
+		lblPrecioTotal.setBounds(292, 190, 86, 14);
 		contentPane.add(lblPrecioTotal);
-
-		list = new JList();
-		list.setBounds(33, 215, 222, 79);
-		contentPane.add(list);
 
 		listaCompra = new JList();
 		listaCompra.setBounds(32, 24, 223, 140);
 		contentPane.add(listaCompra);
 
-		listado(gbd.listarCompra());
-		listaCompra.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
-					if (list.getSelectedIndex() >= 0) {
-						//datosLista((Producto) list.getSelectedValue());
-						//Coger datos del seleccionado en la lista de la compra
-						datosCompra();//Sin hacer
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(32, 215, 250, 108);
+		contentPane.add(scrollPane);
+		
+				table = new JTable(new DefaultTableModel(
+					new Object[][] {
+					},
+					new String[] {
+						"Producto", "Precio", "Cantidad"
 					}
-				}
-			}
-		});
+				));
+				scrollPane.setViewportView(table);
+				modelo = (DefaultTableModel)table.getModel();
+
+		listado(gbd.listarCompra());
+		
+	
 	}
 
 	@SuppressWarnings("unchecked")
@@ -140,28 +145,41 @@ public class CompraUI extends JFrame {
 		}
 		listaCompra.setModel(dlm);
 	}
-	//Del Jlist del listado de compra al Jlist del carrito y un return para enviar los datos al GestorBBDD
+
+	// Del Jlist del listado de compra al Jlist del carrito y un return para
+	// enviar los datos al GestorBBDD
 	private ArrayList<Compras> addCarrito() {
 		ArrayList<Compras> ProductosComprados = new ArrayList<Compras>();
-		
-		
+
 		return ProductosComprados;
-	
-	//Preparar el carrito para añadir al gestor de BBDD
+
+		// Preparar el carrito para añadir al gestor de BBDD
 	}
-	public void carrito() {
+
+	public void carrito(Compras c) {
+		Object[] lista = new Object[] { c.getNombreProducto(), c.getPrecioUnidad(), spinner.getValue() };
+		//System.out.println("Nombre:"+c.getNombreProducto()+" PrecioUnidad:"+c.getPrecioUnidad()+" ValorSpinner:"+spinner.getValue());
+		modelo.addRow(lista);
 		// pedir los productos al gestor
 		// addCarrito(gbd.listarProductos());
 	}
+
 	// llamar al metodo comprar para insertar en la bbdd de compras
 	public void comprarCarrito(double suma) {
-		gbd.crearCompra(suma);//Sin terminar
-		gbd.crearCarrito();//Sin terminar
+		gbd.crearCompra(suma);// Sin terminar
+		gbd.crearCarrito();// Sin terminar
 		JOptionPane.showMessageDialog(this, "Haz realizado una compra.");
 		dispose();
 	}
-	private void datosCompra() {
-		
-		
+	public void setPrecioTotal(){
+		int filas = modelo.getRowCount();
+		filas-=1;
+		double precioTotal=0;
+		 for(int i=0;i<=(filas);i++){
+		 double precioProductoTotal = Double.parseDouble(modelo.getValueAt(i, 1).toString()) * Double.parseDouble(modelo.getValueAt(i, 2).toString());
+	     //precioTotal = Double.parseDouble(String.valueOf(modelo.getValueAt(i,1)));
+	     precioTotal=precioProductoTotal+precioTotal;
+	        }
+		textPrecioTotal.setText(String.format("%.2f", precioTotal)+"€");
 	}
 }
