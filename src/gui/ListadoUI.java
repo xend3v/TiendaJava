@@ -15,6 +15,7 @@ import manager.GestorBBDD;
 import model.Producto;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.DefaultListModel;
@@ -22,6 +23,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.JScrollPane;
 
 public class ListadoUI extends JFrame {
 
@@ -52,10 +54,23 @@ public class ListadoUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 201, 213);
+		contentPane.add(scrollPane);
 
 		list = new JList();
-		list.setBounds(10, 11, 201, 213);
-		contentPane.add(list);
+		scrollPane.setViewportView(list);
+		
+				list.addListSelectionListener(new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent e) {
+						if (!e.getValueIsAdjusting()) {
+							if (list.getSelectedIndex() >= 0) {
+								datosLista((Producto) list.getSelectedValue());
+							}
+						}
+					}
+				});
 
 		textNombre = new JTextField();
 		textNombre.setBounds(338, 11, 86, 20);
@@ -122,21 +137,11 @@ public class ListadoUI extends JFrame {
 		btnEliminar.setBounds(221, 179, 107, 23);
 		contentPane.add(btnEliminar);
 		listado(gbd.listarProductos());
-
-		list.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
-					if (list.getSelectedIndex() >= 0) {
-						datosLista((Producto) list.getSelectedValue());
-					}
-				}
-			}
-		});
 	}
 
 	public void listado(ArrayList<Producto> lstProductos) {
 		DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
-		for (Producto p : gbd.listarProductos()) {
+		for (Producto p : lstProductos) {
 			dlm.addElement(p);
 		}
 		list.setModel(dlm);
@@ -170,6 +175,7 @@ public class ListadoUI extends JFrame {
 				e.printStackTrace();
 			}
 			gbd.modificar(p_seleccionado);
+			JOptionPane.showMessageDialog(this,"Se ha modificado "+ p_seleccionado.getNombrePro());
 			listado(gbd.listarProductos());
 		}
 	}

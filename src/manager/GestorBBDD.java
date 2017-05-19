@@ -101,7 +101,7 @@ public class GestorBBDD {
 				String nombre = rs.getString("Nombre");
 				float precio = rs.getFloat("Precio");
 				Integer stock = rs.getInt("Stock"); // Producto
-				Compras compra = new Compras(nombre, precio);
+				Compras compra = new Compras(nombre, precio, stock);
 				listadoC.add(compra);
 			}
 		} catch (SQLException e) { // TODO Auto-generated catch block
@@ -171,16 +171,16 @@ public class GestorBBDD {
 		fecha = sdft.format(rs);
 		return fecha;
 	}
-	public void crearCarrito(){//Insertar los datos en la tabla DETALLES
+	public void crearCarrito(String FechaCompra, int idProducto,  String NombreProducto, float PrecioProducto, int CantidadProducto){//Insertar los datos en la tabla DETALLES
 		PreparedStatement ps;
 		String sql = "INSERT INTO DETALLES VALUES (?,?,?,?,?);";
 		try {
 			ps = conex.prepareStatement(sql);
-			/*ps.setString(1, FechaCompra);*/
-			/*ps.setInt(2,  IdProducto);*/
-			/*ps.setString(3,  NombreProducto);*/
-			/*ps.setFloat(4,  PrecioProducto);*/
-			/*ps.setInt(5,  CantidadProducto);*/
+			ps.setString(1, FechaCompra);
+			ps.setInt(2,  idProducto);
+			ps.setString(3,  NombreProducto);
+			ps.setFloat(4,  PrecioProducto);
+			ps.setInt(5,  CantidadProducto);
 			
 			ps.executeUpdate();
 		} catch (SQLException e) {

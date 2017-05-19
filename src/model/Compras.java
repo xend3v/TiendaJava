@@ -1,43 +1,55 @@
 package model;
 
-//import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Compras {
 	private int idCompra;
-	private int idProducto;
-	
+	private int IdProducto;
 	private String nombreProducto;
 	private float precioUnidad;
 	private float precioTotal;
 	private int cantidadUnidad;
+	private int cantidadTotal;
 	private Date fechaCompra;
-	private int Stock;
-	//private ArrayList<Compras> listCompra = new ArrayList<Compras>();
+	private ArrayList<Compras> listCompra = new ArrayList<Compras>();
 	
 	//Constructora para tabla compras sql
-		public Compras (String nombreProducto, float precioUnidad, float precioTotal, int cantidadUnidad, Date fechaCompra){
+		public Compras (String nombreProducto,int idProducto, float precioUnidad, float precioTotal, int cantidadUnidad, int cantidadTotal, Date fechaCompra){
 			//this.idCompra=idCompra;
-			//this.idProducto=idProducto;
+			this.IdProducto=idProducto;
 			this.nombreProducto=nombreProducto;
 			this.precioUnidad=precioUnidad;
 			this.precioTotal=precioTotal;
 			this.cantidadUnidad=cantidadUnidad;
+			this.cantidadTotal=cantidadTotal;
 			this.fechaCompra=fechaCompra;
 		}
+		
 		//constructora para mostrar compras
 		 public Compras(int idCompra, float precioTotal,Date fechaCompra){
 			 this.idCompra=idCompra;
 			 this.precioTotal=precioTotal;
 			 this.fechaCompra=fechaCompra;		 
 		 }
-		 //constructora para mostrar lista de compra
-		 public Compras (String nombreProd, float precioUnidad){
-			 this.nombreProducto = nombreProd;
-			 this.precioUnidad = precioUnidad;
+		 
+		 //constructora para añadir compras
+		 public Compras(String nombre, float precio, int cantidad){
+			 this.nombreProducto=nombre;
+			 this.precioUnidad=precio;
+			 this.cantidadUnidad=cantidad;		 
 		 }
 		
 	//metodos Getters and Setters	 
+		 
+	public int getIdProducto() {
+			return IdProducto;
+	}
+	
+	public void setIdProducto(int idProducto) {
+			IdProducto = idProducto;
+	}
+	 	 
 	public int getIdCompra() {
 			return idCompra;
 		}
@@ -83,25 +95,20 @@ public class Compras {
 		this.cantidadUnidad = cantidadUnidad;
 	}
 
-
+	public int getCantidadTotal() {
+		return cantidadTotal;
+	}
+	
+	public void setCantidadTotal(int cantidadTotal) {
+		this.cantidadTotal = cantidadTotal;
+	}
+	
+	
 	public Date getFechaCompra() {
 		return fechaCompra;
 	}
 
-
 	public void setFechaCompra(Date fechaCompra) {
 		this.fechaCompra = fechaCompra;
-	}
-	public int getStock() {
-		return Stock;
-	}
-	public void setStock(int stock) {
-		Stock = stock;
-	}
-	@Override
-	public String toString(){
-		return "Nombre: " + nombreProducto + " || Precio: " + precioUnidad +"€";
-	}
-
-	
+	}	
 }
