@@ -14,7 +14,7 @@ public class Compras {
 	private Date fechaCompra;
 	private ArrayList<Compras> listCompra = new ArrayList<Compras>();
 	
-	//Constructora para tabla compras sql
+	//Constructora para tabla detalles sql
 		public Compras (String nombreProducto,int idProducto, float precioUnidad, float precioTotal, int cantidadUnidad, int cantidadTotal, Date fechaCompra){
 			//this.idCompra=idCompra;
 			this.IdProducto=idProducto;

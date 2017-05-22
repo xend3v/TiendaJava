@@ -136,10 +136,11 @@ public class GestorBBDD {
 	public void crearCompra(double suma) {//Insertar los datos en COMPRAS
 		PreparedStatement ps;
 		String sql = "INSERT INTO COMPRAS (PrecioTotal, FechaCompra) VALUES (?,?);";
+		
 		try {
 			ps = conex.prepareStatement(sql);
-			ps.setDouble(2, suma);
-			ps.setString(3, sdft.format(new Date()));//Inserta la fecha actual
+			ps.setDouble(1, suma); //Introduce la suma del precio total
+			ps.setString(2, sdft.format(new Date()));//Inserta la fecha actual
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -147,7 +148,7 @@ public class GestorBBDD {
 	}
 	//metodo para restar las cantidades compradas al stock
 	public void restarCantidad(int cantidad, int IDprod){
-		String sql = "Update PRODUCTOS SET Stock="+cantidad+" where IDProd="+IDprod+";";
+		String sql = "Update PRODUCTOS SET Stock=(Stock"+-cantidad+") where IDProd="+IDprod+";";
 		try {
 			PreparedStatement ps = conex.prepareStatement(sql);
 			int hecho = ps.executeUpdate();
@@ -156,9 +157,10 @@ public class GestorBBDD {
 			e.printStackTrace();
 		}
 	}
+	
 	//Coger fechacompra[ID de detalles] para el metodo crearCarrito
 	public String fechaProducto(String fecha) throws SQLException{ 
-		String sql = "Select FechaCompra from COMPRAS where IDCompra='';";
+		String sql = "Select FechaCompra from COMPRAS where IDCompra='?';";
 		ResultSet rs;
 		PreparedStatement ps = conex.prepareStatement(sql);;
 		try {
@@ -171,6 +173,9 @@ public class GestorBBDD {
 		fecha = sdft.format(rs);
 		return fecha;
 	}
+	
+	//
+
 	public void crearCarrito(String FechaCompra, int idProducto,  String NombreProducto, float PrecioProducto, int CantidadProducto){//Insertar los datos en la tabla DETALLES
 		PreparedStatement ps;
 		String sql = "INSERT INTO DETALLES VALUES (?,?,?,?,?);";

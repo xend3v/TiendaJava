@@ -57,7 +57,7 @@ public class HistorialUI extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"IdCompra", "PrecioTotal", "FechaCompra"
+				"ID Compra", "Precio Total (€)", "Fecha Compra"
 			}
 		));
 		//mostrar historial compras

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,7 +100,10 @@ public class CompraUI extends JFrame {
 		JButton btnComprar = new JButton("Comprar");
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comprarCarrito();
+				comprar();
+				restarProductos(p);
+				//comprarCarrito();
+				
 			}
 		});
 		btnComprar.setBounds(415, 257, 86, 36);
@@ -150,7 +154,7 @@ public class CompraUI extends JFrame {
 	}
 
 	// mostrar producto seleccionados
-	public void carrito(Compras c, Producto p) {
+	public void carrito() {
 		// obtener producto seleccinado del Jtable
 		DefaultTableModel tm = (DefaultTableModel) tProductos.getModel();
 
@@ -180,14 +184,14 @@ public class CompraUI extends JFrame {
 		 * DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
 		 * for (Producto p : lstProductos){ dlm.addElement(p); }
 		 * list.setModel(dlm);
-		 */
+		
 		
 		int idCompra = c.getIdCompra();
 		float precioTotal = Float.parseFloat((textPrecioTotal.getText()));
 		Date fechaCompra = c.getFechaCompra();
 		// Insertar compras en la bbdd
-				Compras compra = new Compras(idCompra, precioTotal, fechaCompra);
-				comprar(compra);
+				Compras compraT = new Compras(idCompra, precioTotal, fechaCompra);
+				comprarCarrito(compraT);
 		//Clase Compras		
 		String nombreProducto = p.getNombrePro();
 		float precioUnidad = c.getPrecioUnidad();
@@ -204,6 +208,7 @@ public class CompraUI extends JFrame {
 		// Restar cantidad comprada a Stock
 		Producto resta = new Producto(idProducto, nombrePro, precioProducto, fechaCaducidad, stock);
 		restarProductos(resta);
+		 */
 	}
 
 	public void setPrecioTotal() {
@@ -215,25 +220,36 @@ public class CompraUI extends JFrame {
 					* Double.parseDouble(modelo2.getValueAt(i, 2).toString());
 			precioTotal = precioProductoTotal + precioTotal;
 		}
+		
 		textPrecioTotal.setText(String.format("%.2f", precioTotal) + "€");
 	}
 
-	public void comprarCarrito(Compras c, Producto p) {
+	public void compras(Compras c, Producto p) {
 		
 		
 	}
 
-	public void comprar(Compras c) {
-		double suma = c.getPrecioTotal();
-		gbd.crearCompra(suma);
+	public void comprar() {
+		String txtPrecio=textPrecioTotal.getText();
+		//quitar el €
+		txtPrecio=txtPrecio.substring(0, txtPrecio.length()-1);
+		//cambiar las comas por puntos
+		txtPrecio=txtPrecio.replaceAll(",", ".");
+		Float suma = Float.parseFloat(txtPrecio);
+		//redondear a dos decimales
+		DecimalFormat f = new DecimalFormat("##.00");
+		txtPrecio=f.format(suma);
+		txtPrecio=txtPrecio.replaceAll(",", ".");
+
+		gbd.crearCompra(Float.parseFloat(txtPrecio));
 	}
 	public void detalles(Producto p, Compras c) throws SQLException{
-		String fecha = "tuputamadre";
+		String fecha = "empty";
 		fecha = gbd.fechaProducto(fecha);
 		for (Producto pr : lstProductos){
-			int id = p.getIdProducto();
-			String nombreP = p.getNombrePro();
-			float precio = p.getPrecioUnidad();
+			int id = pr.getIdProducto();
+			String nombreP = pr.getNombrePro();
+			float precio = pr.getPrecioUnidad();
 			int cantPr = c.getCantidadUnidad();
 			gbd.crearCarrito(fecha, id, nombreP, precio, cantPr);
 		}
