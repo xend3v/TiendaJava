@@ -101,7 +101,7 @@ public class CompraUI extends JFrame {
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comprar();
-				restarProductos(p);
+				//restarProductos(p);
 				//comprarCarrito();
 				
 			}
@@ -154,7 +154,7 @@ public class CompraUI extends JFrame {
 	}
 
 	// mostrar producto seleccionados
-	public void carrito() {
+	public void carrito(Compras c, Producto p) {
 		// obtener producto seleccinado del Jtable
 		DefaultTableModel tm = (DefaultTableModel) tProductos.getModel();
 
@@ -180,35 +180,9 @@ public class CompraUI extends JFrame {
 		if (enc == false) {
 			modelo2.addRow(data);
 		}
-		/*
-		 * DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
-		 * for (Producto p : lstProductos){ dlm.addElement(p); }
-		 * list.setModel(dlm);
 		
 		
-		int idCompra = c.getIdCompra();
-		float precioTotal = Float.parseFloat((textPrecioTotal.getText()));
-		Date fechaCompra = c.getFechaCompra();
-		// Insertar compras en la bbdd
-				Compras compraT = new Compras(idCompra, precioTotal, fechaCompra);
-				comprarCarrito(compraT);
-		//Clase Compras		
-		String nombreProducto = p.getNombrePro();
-		float precioUnidad = c.getPrecioUnidad();
-		int cantidadComprada = c.getCantidadUnidad();
 		
-		
-		// Clase Producto
-		int idProducto = p.getIdProducto();
-		String nombrePro = p.getNombrePro();
-		float precioProducto = p.getPrecioUnidad();
-		Date fechaCaducidad = p.getFechaCaducidad();
-		int stock = p.getStock();
-		
-		// Restar cantidad comprada a Stock
-		Producto resta = new Producto(idProducto, nombrePro, precioProducto, fechaCaducidad, stock);
-		restarProductos(resta);
-		 */
 	}
 
 	public void setPrecioTotal() {
@@ -225,6 +199,27 @@ public class CompraUI extends JFrame {
 	}
 
 	public void compras(Compras c, Producto p) {
+		/*
+		 * DefaultListModel<Producto> dlm = new DefaultListModel<Producto>();
+		 * for (Producto p : lstProductos){ dlm.addElement(p); }
+		 * list.setModel(dlm);
+		*/
+		
+		int idCompra = c.getIdCompra();
+		float precioTotal = Float.parseFloat((textPrecioTotal.getText()));
+		Date fechaCompra = c.getFechaCompra();
+		//Clase Compras		
+		String nombreProducto = p.getNombrePro();
+		float precioUnidad = c.getPrecioUnidad();
+		int cantidadComprada = c.getCantidadUnidad();
+		
+		
+		// Clase Producto
+		int idProducto = p.getIdProducto();
+		String nombrePro = p.getNombrePro();
+		float precioProducto = p.getPrecioUnidad();
+		Date fechaCaducidad = p.getFechaCaducidad();
+		int stock = p.getStock();
 		
 		
 	}
